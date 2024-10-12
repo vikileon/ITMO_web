@@ -1,0 +1,939 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/**
+  Нормализация блочной модели
+ */
+ *,
+ ::before,
+ ::after {
+   box-sizing: border-box;
+ }
+ 
+ /**
+   Убираем внутренние отступы слева тегам списков,
+   у которых есть атрибут class
+  */
+ :where(ul, ol):where([class]) {
+   padding-left: 0;
+ }
+ 
+ /**
+   Убираем внешние отступы body и двум другим тегам,
+   у которых есть атрибут class
+  */
+ body,
+ :where(blockquote, figure):where([class]) {
+   margin: 0;
+ }
+ 
+ /**
+   Убираем внешние отступы вертикали нужным тегам,
+   у которых есть атрибут class
+  */
+ :where(
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6,
+   p,
+   ul,
+   ol,
+   dl
+ ):where([class]) {
+   margin-block: 0;
+ }
+ 
+ :where(dd[class]) {
+   margin-left: 0;
+ }
+ 
+ :where(fieldset[class]) {
+   margin-left: 0;
+   padding: 0;
+   border: none;
+ }
+ 
+ /**
+   Убираем стандартный маркер маркированному списку,
+   у которого есть атрибут class
+  */
+ :where(ul[class]) {
+   list-style: none;
+ }
+ 
+ :where(address[class]) {
+   font-style: normal;
+ }
+ 
+ /**
+   Обнуляем вертикальные внешние отступы параграфа,
+   объявляем локальную переменную для внешнего отступа вниз,
+   чтобы избежать взаимодействие с более сложным селектором
+  */
+ p {
+   --paragraphMarginBottom: 24px;
+ 
+   margin-block: 0;
+ }
+ 
+ /**
+   Внешний отступ вниз для параграфа без атрибута class,
+   который расположен не последним среди своих соседних элементов
+  */
+ p:where(:not([class]):not(:last-child)) {
+   margin-bottom: var(--paragraphMarginBottom);
+ }
+ 
+ 
+ /**
+   Упрощаем работу с изображениями
+  */
+ img {
+   display: block;
+   max-width: 100%;
+ }
+ 
+ /**
+   Наследуем свойства шрифт для полей ввода
+  */
+ input,
+ textarea,
+ select,
+ button {
+   font: inherit;
+ }
+ 
+ html {
+   /**
+     Пригодится в большинстве ситуаций
+     (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+   height: 100%;
+ }
+ 
+ /**
+   Плавный скролл
+  */
+ html,
+ :has(:target) {
+   scroll-behavior: smooth;
+ }
+ 
+ body {
+   /**
+     Пригодится в большинстве ситуаций
+     (когда, например, нужно будет "прижать" футер к низу сайта)
+    */
+   min-height: 100%;
+   /**
+     Унифицированный интерлиньяж
+    */
+   line-height: 1.5;
+ }
+ 
+ /**
+   Приводим к единому цвету svg-элементы
+  */
+ svg *[fill] { fill: currentColor }
+ svg *[stroke] { stroke: currentColor }
+ 
+ /**
+   Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+  */
+ svg * {
+   transition-property: fill, stroke;
+ }
+ 
+ /**
+   Удаляем все анимации и переходы для людей,
+   которые предпочитают их не использовать
+  */
+ @media (prefers-reduced-motion: reduce) {
+   *,
+   ::before,
+   ::after {
+     animation-duration: 0.01ms !important;
+     animation-iteration-count: 1 !important;
+     transition-duration: 0.01ms !important;
+     scroll-behavior: auto !important;
+   }
+ }
+
+ :root {
+    --color-indigo: #818CF8;
+    --color-border: #6366F1;
+    --color-dark-indigo: #4F46E5;
+    --color-blue-gray: #334155;
+    --color-animation-grey: #4d5c6f;
+    --color-animation-indigo: #7670ea;
+    --color-dark-blue-gray: #1E293B;
+    --color-light-gray: #CBD5E1;
+    --color-light: #FFFFFF;
+    --color-light-indigo: #edeeff;
+    --color-dark: #0f172a;
+    --color-active-btn: #98a2f8;
+
+    --border-radius-small: 8px;
+    --border-radius-big: 20px;
+    --border: 1px solid var(--color-border);
+
+    --font-family-base: 'Roboto', sans-serif;
+
+    --input-height: 56px;
+
+    --container-large-width: 1280px;
+    --container-small-width: 600px;
+    --container-padding-x: 15px;
+
+    --transition-duration: 0.2s;
+
+ }
+
+ .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+ body {
+    font-family: var(--font-family-base);
+    font-weight: 400;
+    color: var(--color-light-gray);
+    font-size: 18px;
+    line-height: 1.75;
+    background-color: var(--color-dark);
+ }
+
+ a, button, input, textarea, svg * {
+    transition-duration: var(--transition-duration);
+ }
+
+ a {
+    color: var(--color-light);
+ }
+
+ .container-large {
+    max-width: calc(var(--container-large-width) + var(--container-padding-x) * 2);
+    margin-inline: auto;
+    padding-inline: var(--container-padding-x);
+ }
+
+ .container-small {
+    max-width: calc(var(--container-small-width) + var(--container-padding-x) * 2);
+    margin-inline: auto;
+    padding-inline: var(--container-padding-x);
+ }
+
+ h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+ }
+
+ .smaller-headline {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 35.2px;
+  text-align: left;
+ }
+
+ .start-align {
+   align-items: flex-start;
+ }
+
+ .end-align {
+   align-items: flex-end;
+ }
+
+
+ header {
+    display: flex;
+    padding: 24px 80px 24px 80px;
+    gap: 202px;
+    opacity: 0px;
+    background-color: var(--color-dark-blue-gray);
+ }
+
+ .header {
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+ }
+
+ .header-logo {
+    flex-shrink: 0;
+ }
+
+ .button {
+    display: inline-flex;
+    width: 256px;
+    height: 58px;
+    min-width: 150px;
+    font-size: 20px;
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-light-indigo);
+    border: var(--border);
+    border-radius: var(--border-radius-small);
+    padding: 16px;
+    white-space: nowrap;
+ }
+
+ .gray-button {
+    background-color: var(--color-blue-gray);
+ }
+
+ .gray-button:hover {
+    background-color: var(--color-animation-grey);
+    color: var(--color-active-btn);
+ }
+
+ .indigo-button {
+    background-color: var(--color-dark-indigo);
+ }
+
+ .indigo-button:hover {
+    background-color: var(--color-animation-indigo);
+    color: var(--color-light);
+ }
+
+ .header-actions {
+    display: flex;
+    gap: 20px;
+    text-align: center;
+ }
+
+ .header-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 48px;
+    padding-inline: 12px;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    line-height: 200%;
+    color: var(--color-light);
+    border: var(--border);
+    border-radius: var(--border-radius-small);
+    white-space: nowrap;
+ }
+
+ .log-in-button {
+    background-color: transparent;
+    border: none;
+    width: auto;
+    padding: 12px 8px 12px 8px;
+ }
+
+ .log-in-button:hover {
+    text-decoration-line: underline;
+    color: var(--color-active-btn);
+ }
+
+ .extra-button {
+  align-items: left;
+  justify-content: left;
+  column-gap: 16px;
+ }
+
+ .header-menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 16px;
+    text-align: center;
+ }
+
+ .header-menu-link {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+    padding: 12px 8px 12px 8px;
+ }
+
+ .header-menu-link:hover {
+    text-decoration-line: underline;
+ }
+
+ section {
+    padding: 80px;
+    gap: 80px;
+ }
+
+ .indigo-text {
+    color: var(--color-indigo);
+ }
+
+ .title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: var(--font-family-base);
+    gap: 32px;
+ }
+
+ .caption {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 22px;
+ }
+
+ .main-motto {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 79px;
+    color: var(--color-light);
+ }
+
+ .action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 16px;
+ }
+
+ .shapes-image {
+   display: flex;
+   align-items: center;
+   width: 284px;
+   height: 284px;
+   margin-top: 80px;
+   flex-shrink: 0;
+ }
+
+ .partners {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-family: var(--font-family-base);
+    gap: 32px;
+ }
+
+ .trusted-partners {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 27px;
+ }
+
+ .partners-menu-list {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 80px;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .partners-menu-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-direction: row;
+    column-gap: 80px;
+    text-decoration: none;
+    line-height: 26px;
+    text-align: center;
+    padding: 12px 8px 12px 8px;
+ }
+
+ .partner-logo {
+  max-width: 176px;
+  height: 32px;
+ }
+
+ li.partners-menu-item {
+  height: 26px;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .bigger-team {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+ }
+
+ .powerful-tools {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-management {
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+ justify-content: center;
+}
+
+.statistics {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-statistics {
+  display: flex;
+  border-radius: var(--border-radius-big);
+  border: var(--border);
+  gap: 0;
+  padding: 80px;
+}
+
+ .advantages-headline {
+   font-size: 48px;
+   font-weight: 800;
+   line-height: 53px;
+   text-align: left;
+   color: var(--color-light);
+ }
+
+ .advantages {
+   width: 600px;
+   gap: 24px;
+ }
+
+ .paragraph {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 29px;
+  text-align: left;
+  gap: 24px;
+  padding: 32px 0px;
+ }
+
+ .paragraph-title {
+  text-align: center;
+ }
+
+ .images {
+   display: flex;
+   flex-wrap: wrap;
+   width: 600px;
+   height: 410px;
+   column-gap: 24px;
+ }
+
+ .images-group {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   width: 100%;
+   height: 192px;
+   gap: 24px;
+ }
+
+ .image {
+   border-radius: var(--border-radius-big);
+   width: 264px;
+   height: 100%;
+   flex-shrink: 0;
+   object-fit: cover;
+ }
+
+ .square-image {
+   border-radius: var(--border-radius-big);
+   width: 207px;
+   height: 100%;
+   object-fit: cover;
+   flex-shrink: 0;
+   vertical-align: middle;
+ }
+
+ .wide-image {
+   border-radius: var(--border-radius-big);
+   max-width: 485px;
+   height: 100%;
+   object-fit: cover;
+   flex-shrink: 0;
+   vertical-align: middle;
+ }
+
+ .management-image {
+  display: flex;
+  flex-wrap: wrap;
+  width: 600px;
+  height: 555px;
+ }
+
+ .large-image {
+  border-radius: var(--border-radius-big);
+  width: 600px;
+  height: 555px;
+  object-fit: cover;
+  flex-shrink: 0;
+  vertical-align: middle;
+ }
+
+ .statistics-graphic {
+  display: flex;
+  flex-wrap: wrap;
+  width: 608px;
+  height: 277px;
+ }
+
+ .advatnages-list {
+   list-style-image: url('./icons/check-icon.png');
+   list-style-position: inside;
+   color: var(--color-light);
+   padding-bottom: 32px;
+ }
+
+ .motto {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   text-align: center;
+ }
+
+ .extra-motto {
+   font-size: 56px;
+   font-weight: 800;
+   line-height: 62px;
+   font-family: var(--font-family-base);
+   color: var(--color-light);
+   gap: 32px;
+ }
+
+ footer {
+  display: flex;
+  padding: 24px 80px 24px 80px;
+  gap: 80px;
+  opacity: 0px;
+  background-color: var(--color-dark-blue-gray);
+}
+
+.footer {
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footer-item {
+  padding: 12px 0px;
+}
+
+.footer-link {
+  text-decoration: none;
+}
+
+ .footer-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 80px;
+  width: 100%;
+  padding: 0 80px;
+ }
+
+ .footer-title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 17.6px;
+  text-align: left;
+  padding: 24px 0px;
+  color: var(--color-light);
+ }
+
+ .footer-list { 
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22.4px;
+  text-align: left;
+ }
+
+ .footer-extra {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  padding: 40px 0px;
+ }
+
+ .footer-menu-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  column-gap: 16px;
+  text-align: center;
+ }
+
+ .footer-menu-link {
+  text-decoration: none;
+ }
+
+ .store-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 60px;
+ }
+
+ .store-button {
+  width: 120px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  border-radius: var(--border-radius-small);
+ }
+
+ .store-logo {
+  width: 100%;
+  height: 100%;
+ }
+
+
+ @media (max-width: 1024px) {
+    .header {
+        flex-wrap: wrap;
+        row-gap: 10px;
+        padding-top: 20px;
+        padding-inline: 15px;
+    }
+
+    .header-menu {
+        order: 1;
+        flex-basis: 100%;
+    }
+
+    .header-menu-link {
+        height: 50px;
+    }
+
+    .bigger-team {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .powerful-tools {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .team-management {
+      display: flex;
+      flex-direction: column;
+     }
+  
+  
+     .about-statistics {
+      display: flex;
+      flex-direction: column;
+      padding: 32px;
+     }
+  
+     .powerful-tools > .images {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      border: 0;
+      padding: 0;
+      white-space: nowrap;
+      clip-path: inset(100%);
+      clip: rect(0 0 0 0);
+      overflow: hidden;
+     }
+
+     .footer-main {
+      flex-direction: column;
+      justify-content: center;
+      column-gap: 30px;
+      padding: 0 40px;
+     }
+
+     .footer-extra {
+      flex-direction: column;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px 0px;
+     }
+
+     .footer {
+      flex-wrap: wrap;
+      row-gap: 10px;
+      padding-top: 20px;
+      padding-inline: 15px;
+    }
+
+    .footer-menu {
+      order: 1;
+      flex-basis: 100%;
+    }
+ }
+
+
+ @media (max-width: 767px) {
+    section {
+      padding: 40px;
+      gap: 40px;
+    }
+    .header-button {
+        height: 32px;
+        padding-inline: 10px;
+    }
+
+    .header {
+        padding-top: 10px;
+    }
+
+    .header-menu-list {
+        column-gap: 24px;
+    }
+
+    .header-menu-link {
+        height: 32px;
+    }
+
+    .header-actions {
+        column-gap: 15px;
+    }
+
+    .log-in-button {
+        background-color: transparent;
+        border: none;
+        text-decoration-line: underline;
+     }
+
+     .about-statistics {
+      padding: 16px;
+     }
+
+     .footer {
+      padding-top: 10px;
+    }
+
+    .footer-menu-list {
+      column-gap: 24px;
+    }
+
+     .advantages-headline {
+      font-size: 32px;
+      line-height: 30px;
+    }
+
+    .paragraph {
+      font-size: 16px;
+      line-height: 20px;
+      padding: 24px 0px;
+     }
+
+    .main-motto {
+      font-size: 48px;
+      line-height: 56px;
+   }
+
+   .extra-motto {
+    font-size: 32px;
+    line-height: 48px;
+    gap: 24px;
+  }
+
+     .advantages {
+      width: 300px;
+    }
+
+    .button {
+      display: inline-flex;
+      width: 128px;
+      height: 29px;
+      min-width: 150px;
+      font-size: 14px;
+      padding: 8px;
+   }
+
+   .partner-logo {
+    max-width: 88px;
+    height: 24px;
+   }
+
+    .images {
+      width: 300px;
+      height: 205px;
+    }
+
+    .shapes-image {
+      width: 213px;
+      height: 213px;
+      margin-top: 40px;
+    }
+
+    .images-group {
+      flex-direction: column;
+      width: 50%;
+      height: 96px;
+      gap: 12px;
+    }
+
+    .management-image {
+      width: 300px;
+      height: 300px;
+     }
+
+    .large-image {
+      width: 300px;
+      height: 300px;
+     }
+
+     .statistics-graphic {
+      width: 304px;
+      height: 139px;
+     }
+ }
+
