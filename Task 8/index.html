@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .color-palette {
+            position: relative;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
+
+        .color {
+            display: inline-flex;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border: 5px solid black;
+            margin: 20px;
+        }
+
+        .coloring {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 900px;
+        }
+
+        .coloring-square {
+            display: inline-flex;
+            position: relative;
+            border: none;
+            background-color: grey;
+            width: 200px;
+            height: 200px;
+            margin: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="color-palette">
+        <h1>Color Picker</h1>
+        <div class="palette">
+            <div id="red" class="color" style="background-color: red" data-color="red"></div>
+            <div id="blue" class="color" style="background-color: blue" data-color="blue"></div>
+            <div id="green" class="color" style="background-color: green" data-color="green"></div>
+            <div id="yellow" class="color" style="background-color: yellow" data-color="yellow"></div>
+        </div>
+    </div>
+    <div class="coloring">
+        <div id="square1" class="coloring-square"></div>
+        <div id="square2" class="coloring-square"></div>
+        <div id="square3" class="coloring-square"></div>
+        <div id="square4" class="coloring-square"></div>
+        <div id="square5" class="coloring-square"></div>
+        <div id="square6" class="coloring-square"></div>
+        <div id="square7" class="coloring-square"></div>
+        <div id="square8" class="coloring-square"></div>
+    </div>
+    <script>
+        let currentColor = 'grey';
+
+        document.getElementById("red").addEventListener('click', function () {
+            currentColor = this.getAttribute('data-color')
+        })
+
+        document.getElementById("blue").addEventListener('click', function () {
+            currentColor = this.getAttribute('data-color')
+        })
+
+        document.getElementById("green").addEventListener('click', function () {
+            currentColor = this.getAttribute('data-color')
+        })
+
+        document.getElementById("yellow").addEventListener('click', function () {
+            currentColor = this.getAttribute('data-color')
+        })
+
+        document.getElementById("square1").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+        document.getElementById("square2").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+        document.getElementById("square3").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+        document.getElementById("square4").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+        document.getElementById("square5").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+        document.getElementById("square6").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+        document.getElementById("square7").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+        document.getElementById("square8").addEventListener('click', function () {
+            this.style.backgroundColor = currentColor;
+        })
+
+    </script>
+</body>
+</html>
