@@ -1,0 +1,78 @@
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.modal.active {
+    z-index: 99;
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.modal .modal-window {
+    background-color: white;
+    width: 42rem;
+}
+
+.modal .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem;
+}
+
+.modal .modal-header h3 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.modal .modal-header .btn-close {
+    font-size: 3rem;
+}
+
+.modal .modal-body {
+    font-size: 1.5rem;
+    margin: 2rem;
+}
+
+.modal .modal-footer {
+    margin: 2rem;
+}
+
+.btn-open {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background-color: rgb(86, 187, 108);
+    color: aliceblue;
+    border: 0;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
